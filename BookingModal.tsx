@@ -19,8 +19,14 @@ export const BookingModal: React.FC<BookingModalProps> = ({ mentorId, onClose, o
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [status, setStatus] = useState<'pending' | 'utr_submitted' | 'completed' | 'failed'>('pending');
-    const [timer, setTimer] = useState<number>(60);
+    const [timer, setTimer] = useState<number>(300); // 5 minutes timer (300 seconds)
     const [showUtrForm, setShowUtrForm] = useState<boolean>(false);
+
+    const formatTimer = (seconds: number) => {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    };
     const [utrInput, setUtrInput] = useState<string>('');
     const [submittingUtr, setSubmittingUtr] = useState<boolean>(false);
     const [utrError, setUtrError] = useState<string | null>(null);
@@ -194,7 +200,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ mentorId, onClose, o
                         </p>
 
                         <div className="status-indicator" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', fontSize: '13px', color: '#2563eb', background: '#eff6ff', padding: '10px', borderRadius: '8px' }}>
-                            <span className="spinner">⏳</span> Waiting for payment confirmation... ({timer}s)
+                            <span className="spinner">⏳</span> Waiting for payment confirmation... ({formatTimer(timer)})
                         </div>
 
                         <button 

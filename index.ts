@@ -43,6 +43,18 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     next();
 });
 
+app.get('/', (req: Request, res: Response) => {
+    res.status(200).json({
+        status: 'ok',
+        message: 'Payment Gateway API is running',
+        timestamp: new Date().toISOString()
+    });
+});
+
+app.get('/health', (req: Request, res: Response) => {
+    res.status(200).json({ status: 'healthy' });
+});
+
 app.post('/api/payment/create-qr', createQrOrder);
 app.get('/api/payment/status/:tn', getTransactionStatus);
 app.post('/api/payment/submit-utr', submitUtr);
